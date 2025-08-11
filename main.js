@@ -76,9 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ========= Page-specific Functions =========
   function initListingsPage() {
-    console.log("Listings page loaded.");
-    // TODO: Move your listings-specific JS here from listings.html
-  }
+  console.log("Listings page loaded.");
+
+  // Example: Filter button logic
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      console.log(`Filter applied: ${btn.dataset.filter}`);
+      // Add your filtering logic here
+    });
+  });
+
+  // If you had any other inline JS in listings.html, it will be moved here
+}
 
   function initProductPage() {
     console.log("Product page loaded.");
