@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clycle</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clycle – Student Sustainability Marketplace</title>
+  <meta name="description" content="Clycle is a student marketplace for sustainable buying, selling, and reusing.">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
+  <!-- ✅ Your existing styles -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 
-  <!-- SPA Navigation Script -->
-  <script defer src="main.js"></script>
+  <!-- ✅ Placeholder for favicon -->
+  <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+
+  <!-- ✅ Placeholder for site logo -->
+  <!-- <img src="logo.png" alt="Clycle Logo" class="site-logo"> -->
+
+  <!-- ✅ SPA Loader Script -->
+  <script defer src="main.js?v=2"></script>
 </head>
 <body>
 
-  <!-- ===== Persistent Header ===== -->
-  <header class="site-header">
-    <!-- ✅ This is exactly your original header content -->
-    <nav>
-      <div class="logo">
-        <!-- Logo placeholder -->
-        <img src="images/logo-placeholder.png" alt="Clycle Logo" />
-      </div>
+  <!-- ✅ Persistent Header -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">Clycle</a>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
         <li><a href="listings.html">Listings</a></li>
         <li><a href="repair-reuse.html">Repair & Reuse</a></li>
         <li><a href="cart.html">Cart</a></li>
         <li><a href="profile.html">Profile</a></li>
+        <li><a href="auth.html">Login</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ===== Dynamic Page Content ===== -->
+  <!-- ✅ Dynamic Content Area -->
   <main id="page-content">
-    <!-- Initial content will be dynamically loaded here by main.js -->
+    <!-- Your homepage content goes here -->
+    <section class="hero">
+      <h1>Welcome to Clycle</h1>
+      <p>Buy, Sell, Rent, and Reuse – Sustainably, On Campus.</p>
+      <a href="listings.html" class="btn-primary">Browse Listings</a>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <h3>Eco-Friendly</h3>
+        <p>Promoting sustainable choices for students.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Community Driven</h3>
+        <p>Connect with peers on campus to exchange items.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Affordable</h3>
+        <p>Get the best deals from fellow students.</p>
+      </div>
+    </section>
   </main>
 
-  <!-- ===== Persistent Footer ===== -->
-  <footer class="site-footer">
-    <!-- ✅ This is exactly your original footer content -->
-    <div class="footer-content">
-      <p>&copy; 2025 Clycle - Student Sustainability Marketplace</p>
-      <p>Contact us: <a href="mailto:support@clycle.com">support@clycle.com</a></p>
-    </div>
+  <!-- ✅ Persistent Footer -->
+  <footer>
+    <p>&copy; 2025 Clycle – Built for Students, By Students.</p>
   </footer>
 
 </body>
