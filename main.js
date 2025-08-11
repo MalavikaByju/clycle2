@@ -128,14 +128,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function initProfilePage() {
-    console.log("Profile page loaded.");
-    // TODO: Move your profile-specific JS here from profile.html
+  console.log("Profile page loaded.");
+
+  // Handle Edit Profile
+  const editBtn = document.getElementById("edit-profile");
+  if (editBtn) {
+    editBtn.addEventListener("click", () => {
+      alert("Edit Profile clicked");
+      // Add your edit profile logic here
+    });
   }
 
-  function initRepairReusePage() {
-    console.log("Repair & Reuse page loaded.");
-    // TODO: Move your repair-reuse-specific JS here from repair-reuse.html
+  // Handle Logout
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      alert("You have been logged out.");
+      // Add your logout logic here (clear session, redirect, etc.)
+    });
   }
+}
+
+
+  function initRepairReusePage() {
+  console.log("Repair & Reuse page loaded.");
+
+  // Handle contact button clicks
+  document.querySelectorAll(".service-contact").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const serviceType = btn.dataset.service;
+      alert(`Contacting ${serviceType} repair service...`);
+      // Add your messaging or booking logic here
+    });
+  });
+}
+
 
   function initAuthPage() {
     console.log("Auth page loaded.");
