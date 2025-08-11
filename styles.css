@@ -88,6 +88,7 @@ body {
   background: linear-gradient(135deg, var(--light-earthy) 0%, #f8f4e6 100%);
   min-height: 100vh;
   overflow-x: hidden;
+  padding-top: 70px;
 }
 
 /* ===== ENHANCED ANIMATIONS ===== */
@@ -301,8 +302,9 @@ p {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(141, 151, 88, 0.1);
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   z-index: 1000;
   transition: all var(--transition-normal);
 }
