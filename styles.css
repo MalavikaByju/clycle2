@@ -2827,22 +2827,9 @@ p {
     scroll-behavior: auto !important;
   }
 }
-/* ==== FIX: Listings header should not be sticky (scoped override) ==== */
-/* This override neutralizes the page-level sticky header that caused awkward spacing.
-   It keeps the header visible in the normal flow without affecting other pages. */
-.listings-header {
-  position: static !important; /* was: sticky */
-  top: auto !important;        /* remove offset introduced for other headers */
+/* Force listings header to be static instead of sticky */
+header.listings-header {
+  position: static !important;
+  top: auto !important;
 }
 
-/* Optional: maintain a subtle separation from content without feeling "fixed" */
-.listings-header {
-  border-bottom: 1px solid var(--gray-200);
-}
-
-/* Optional: give the section below comfortable breathing room on small screens */
-@media (max-width: 768px) {
-  .filters-section {
-    margin-top: 0.5rem;
-  }
-}
