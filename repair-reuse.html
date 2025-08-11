@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post an Item - Clycle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo">Clycle</a>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="listings.html" class="nav-link">Browse</a>
+                </li>
+                <li class="nav-item">
+                    <a href="repair-reuse.html" class="nav-link active" aria-current="page">Post Item</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Post Item Section -->
+    <section class="post-item-section">
+        <div class="container">
+            <div class="post-item-header">
+                <h1>Share with your community</h1>
+                <p>List your item and help fellow students find what they need</p>
+            </div>
+
+            <div class="post-item-layout">
+                <!-- Main Form -->
+                <div class="form-container">
+                    <form class="post-item-form" id="post-item-form" novalidate>
+                        <!-- Item Title -->
+                        <div class="form-group title-group">
+                            <label for="item-title" class="sr-only">Item Title</label>
+                            <input 
+                                type="text" 
+                                id="item-title" 
+                                name="title" 
+                                placeholder="What are you selling?" 
+                                class="title-input"
+                                required
+                                aria-describedby="item-title-error"
+                            >
+                            <div class="error-message" id="item-title-error" role="alert"></div>
+                        </div>
+
+                        <!-- Category Selection -->
+                        <div class="form-group">
+                            <label for="item-category">Category</label>
+                            <div class="category-grid" role="radiogroup" aria-labelledby="item-category">
+                                <input type="radio" id="yoga-mats" name="category" value="yoga-mats">
+                                <label for="yoga-mats" class="category-tile">
+                                    <span class="category-icon">🧘</span>
+                                    <span class="category-name">Yoga Mats</span>
+                                </label>
+
+                                <input type="radio" id="containers" name="category" value="containers">
+                                <label for="containers" class="category-tile">
+                                    <span class="category-icon">🪣</span>
+                                    <span class="category-name">Buckets & Containers</span>
+                                </label>
+
+                                <input type="radio" id="clothing" name="category" value="clothing">
+                                <label for="clothing" class="category-tile">
+                                    <span class="category-icon">👕</span>
+                                    <span class="category-name">Clothing</span>
+                                </label>
+
+                                <input type="radio" id="books" name="category" value="books">
+                                <label for="books" class="category-tile">
+                                    <span class="category-icon">📚</span>
+                                    <span class="category-name">Books</span>
+                                </label>
+
+                                <input type="radio" id="stationery" name="category" value="stationery">
+                                <label for="stationery" class="category-tile">
+                                    <span class="category-icon">✏️</span>
+                                    <span class="category-name">Stationery</span>
+                                </label>
+
+                                <input type="radio" id="furniture" name="category" value="furniture">
+                                <label for="furniture" class="category-tile">
+                                    <span class="category-icon">🪑</span>
+                                    <span class="category-name">Furniture</span>
+                                </label>
+
+                                <input type="radio" id="miscellaneous" name="category" value="miscellaneous">
+                                <label for="miscellaneous" class="category-tile">
+                                    <span class="category-icon">📦</span>
+                                    <span class="category-name">Other</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Condition -->
+                        <div class="form-group">
+                            <label>Item Condition</label>
+                            <div class="condition-options" role="radiogroup">
+                                <input type="radio" id="new" name="condition" value="new">
+                                <label for="new" class="condition-option">
+                                    <span class="condition-title">New</span>
+                                    <span class="condition-desc">Brand new, never used</span>
+                                </label>
+
+                                <input type="radio" id="like-new" name="condition" value="like-new">
+                                <label for="like-new" class="condition-option">
+                                    <span class="condition-title">Like New</span>
+                                    <span class="condition-desc">Used once or twice, excellent condition</span>
+                                </label>
+
+                                <input type="radio" id="good" name="condition" value="good">
+                                <label for="good" class="condition-option">
+                                    <span class="condition-title">Good</span>
+                                    <span class="condition-desc">Used but well maintained</span>
+                                </label>
+
+                                <input type="radio" id="needs-repair" name="condition" value="needs-repair">
+                                <label for="needs-repair" class="condition-option">
+                                    <span class="condition-title">Needs Repair</span>
+                                    <span class="condition-desc">Functional but requires some fixing</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="item-description">Description</label>
+                            <textarea 
+                                id="item-description" 
+                                name="description" 
+                                placeholder="Describe your item in detail. Include any flaws, dimensions, or special features..."
+                                rows="4"
+                                required
+                                aria-describedby="item-description-error"
+                            ></textarea>
+                            <div class="error-message" id="item-description-error" role="alert"></div>
+                        </div>
+
+                        <!-- Size (for clothing) -->
+                        <div class="form-group" id="size-group" style="display: none;">
+                            <label for="item-size">Size</label>
+                            <select id="item-size" name="size">
+                                <option value="">Select Size</option>
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="form-group">
+                            <label>Photos</label>
+                            <div class="upload-area" id="upload-area">
+                                <div class="upload-prompt">
+                                    <div class="upload-icon">📷</div>
+                                    <p>Drag & drop photos here or click to browse</p>
+                                    <p class="upload-hint">Add up to 5 photos (JPG, PNG)</p>
+                                </div>
+                                <input 
+                                    type="file" 
+                                    id="photo-input" 
+                                    name="photos" 
+                                    accept="image/*" 
+                                    multiple 
+                                    class="hidden-input"
+                                    aria-describedby="photos-error"
+                                >
+                                <div class="error-message" id="photos-error" role="alert"></div>
+                            </div>
+                            <div class="photo-previews" id="photo-previews"></div>
+                        </div>
+
+                        <!-- Delivery Options -->
+                        <div class="form-group">
+                            <label>Delivery Options</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="pickup" name="delivery" value="pickup">
+                                    <label for="pickup">
+                                        Campus Pickup
+                                        <span class="tooltip" title="Meet on campus for item exchange">ℹ️</span>
+                                    </label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="delivery" name="delivery" value="delivery">
+                                    <label for="delivery">
+                                        Local Delivery
+                                        <span class="tooltip" title="Deliver within campus area">ℹ️</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="form-group">
+                            <label>Price</label>
+                            <div class="price-options">
+                                <div class="price-input-group">
+                                    <span class="currency">₹</span>
+                                    <input 
+                                        type="number" 
+                                        id="item-price" 
+                                        name="price" 
+                                        placeholder="0"
+                                        min="0"
+                                        step="1"
+                                        aria-describedby="item-price-error"
+                                    >
+                                    <div class="error-message" id="item-price-error" role="alert"></div>
+                                </div>
+                                <div class="free-option">
+                                    <input type="checkbox" id="free-item" name="freeItem">
+                                    <label for="free-item">Free to Give Away</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="preview-btn">Preview</button>
+                            <button type="submit" class="btn btn-primary">Share with your community</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="terms-card">
+                        <h3>Terms & Guidelines</h3>
+                        <div class="terms-content">
+                            <h4>📝 Be Honest</h4>
+                            <p>Describe your item's condition accurately. Include any flaws or damage.</p>
+                            
+                            <h4>🔒 Stay Safe</h4>
+                            <p>Meet in public campus locations. Verify student identity before exchange.</p>
+                            
+                            <h4>♻️ Promote Sustainability</h4>
+                            <p>Give items a second life. Consider repairs before disposal.</p>
+                            
+                            <h4>⚖️ Liability</h4>
+                            <p>Clycle is a platform only. Users are responsible for their transactions.</p>
+                            
+                            <h4>🤝 Community Conduct</h4>
+                            <p>Be respectful, responsive, and professional in all interactions.</p>
+                        </div>
+                        <a href="terms.html" class="terms-link">Read Full Terms</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preview Modal -->
+    <div class="modal" id="preview-modal" aria-hidden="true" role="dialog" aria-labelledby="preview-modal-title">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="preview-modal-title">Preview Your Listing</h2>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="listing-preview">
+                    <!-- Preview content loaded by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="edit-listing">Edit Listing</button>
+                    <button type="button" class="btn btn-primary" id="confirm-post">Post Listing</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

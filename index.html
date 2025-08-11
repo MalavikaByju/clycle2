@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clycle - Student Marketplace for Sustainable Living</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo">Clycle</a>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active" aria-current="page">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="listings.html" class="nav-link">Browse</a>
+                </li>
+                <li class="nav-item">
+                    <a href="repair-reuse.html" class="nav-link">Post Item</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="auth.html" class="nav-link">Sign In</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+            <div class="hero-content">
+                <h1 id="hero-title">Buy, Sell & Exchange with Fellow Students</h1>
+                <p class="hero-subtitle">Join your campus community in creating a sustainable marketplace for books, electronics, clothes, and more.</p>
+                <div class="hero-buttons">
+                    <a href="repair-reuse.html" class="btn btn-primary" role="button">Post an Item</a>
+                    <a href="listings.html" class="btn btn-secondary" role="button">Browse Products</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="featured-listings" aria-labelledby="featured-title">
+        <div class="container">
+            <h2 id="featured-title">Featured Listings</h2>
+            <div class="featured-tabs">
+                <button class="tab-btn active" data-tab="trending" aria-controls="trending-panel">Trending</button>
+                <button class="tab-btn" data-tab="recent" aria-controls="recent-panel">Recently Added</button>
+            </div>
+            <div class="tab-content">
+                <div class="tab-panel active" id="trending-panel" role="tabpanel" aria-labelledby="trending-tab">
+                    <div class="listings-grid" id="trending-listings">
+                        <!-- Content loaded by JavaScript -->
+                    </div>
+                </div>
+                <div class="tab-panel" id="recent-panel" role="tabpanel" aria-labelledby="recent-tab">
+                    <div class="listings-grid" id="recent-listings">
+                        <!-- Content loaded by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Categories -->
+    <section class="popular-categories" aria-labelledby="categories-title">
+        <div class="container">
+            <h2 id="categories-title">Popular Categories</h2>
+            <div class="categories-grid">
+                <a href="listings.html?category=books" class="category-card" aria-label="Browse Books">
+                    <div class="category-icon">📚</div>
+                    <h3>Books</h3>
+                </a>
+                <a href="listings.html?category=electronics" class="category-card" aria-label="Browse Electronics">
+                    <div class="category-icon">💻</div>
+                    <h3>Electronics</h3>
+                </a>
+                <a href="listings.html?category=clothing" class="category-card" aria-label="Browse Clothes">
+                    <div class="category-icon">👕</div>
+                    <h3>Clothes</h3>
+                </a>
+                <a href="listings.html?category=furniture" class="category-card" aria-label="Browse Furniture">
+                    <div class="category-icon">🪑</div>
+                    <h3>Furniture</h3>
+                </a>
+                <a href="listings.html?category=stationery" class="category-card" aria-label="Browse Stationery">
+                    <div class="category-icon">✏️</div>
+                    <h3>Stationery</h3>
+                </a>
+                <a href="listings.html?category=containers" class="category-card" aria-label="Browse Buckets & Containers">
+                    <div class="category-icon">🪣</div>
+                    <h3>Buckets & Containers</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" aria-labelledby="how-it-works-title">
+        <div class="container">
+            <h2 id="how-it-works-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">📝</div>
+                    <h3>Post Item</h3>
+                    <p>List your unused items with photos and descriptions. Set your price or offer for exchange.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🔍</div>
+                    <h3>Browse Items</h3>
+                    <p>Discover items posted by fellow students. Filter by category, condition, and price range.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🤝</div>
+                    <h3>Complete Purchase</h3>
+                    <p>Connect with sellers, arrange meetups, and complete safe transactions on campus.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability Stats -->
+    <section class="sustainability-stats" aria-labelledby="stats-title">
+        <div class="container">
+            <h2 id="stats-title">Our Impact</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">2,847</div>
+                    <div class="stat-label">Items Reused</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1,523kg</div>
+                    <div class="stat-label">Waste Reduced</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">892</div>
+                    <div class="stat-label">Students Helped</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Clycle</h3>
+                    <p>Building sustainable campus communities through peer-to-peer exchange.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="listings.html">Browse Items</a></li>
+                        <li><a href="repair-reuse.html">Post Item</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="mailto:support@clycle.com">support@clycle.com</a></li>
+                        <li><a href="tel:+911234567890">+91 12345 67890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Clycle. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

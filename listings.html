@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Products - Clycle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="listings-header">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo">Clycle</a>
+            </div>
+            <div class="search-container">
+                <input 
+                    type="search" 
+                    id="search-input" 
+                    placeholder="Search for items..." 
+                    class="search-input"
+                    aria-label="Search products"
+                >
+                <button class="search-btn" aria-label="Search">🔍</button>
+            </div>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+                    ❤️ <span class="badge" id="wishlist-badge">0</span>
+                </a>
+                <a href="cart.html" class="nav-icon" aria-label="Shopping Cart">
+                    🛒 <span class="badge" id="cart-badge">0</span>
+                </a>
+                <a href="profile.html" class="profile-avatar" aria-label="User Profile">
+                    <img src="https://via.placeholder.com/40x40?text=User" alt="Profile" class="avatar-small">
+                </a>
+            </div>
+            <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filters and Controls -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-header">
+                <h1>Browse Products</h1>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid" aria-label="Grid view">⊞</button>
+                    <button class="view-btn" data-view="list" aria-label="List view">☰</button>
+                </div>
+            </div>
+            
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="yoga-mats">Yoga Mats</option>
+                        <option value="containers">Buckets & Containers</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="books">Books</option>
+                        <option value="stationery">Stationery</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="miscellaneous">Miscellaneous</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="condition-filter">Condition</label>
+                    <select id="condition-filter" class="filter-select">
+                        <option value="">All Conditions</option>
+                        <option value="new">New</option>
+                        <option value="like-new">Like New</option>
+                        <option value="good">Good</option>
+                        <option value="fair">Fair</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="availability-filter">Availability</label>
+                    <select id="availability-filter" class="filter-select">
+                        <option value="">All</option>
+                        <option value="available">Available</option>
+                        <option value="sold">Sold</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group price-range">
+                    <label for="price-range">Price Range</label>
+                    <div class="price-inputs">
+                        <input type="number" id="min-price" placeholder="Min" class="price-input">
+                        <input type="number" id="max-price" placeholder="Max" class="price-input">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sort-select">Sort By</label>
+                    <select id="sort-select" class="filter-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-outline" id="clear-filters">Clear Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-count">
+                <span id="results-count">Loading products...</span>
+            </div>
+            
+            <div class="products-container">
+                <div class="products-grid" id="products-grid">
+                    <!-- Products loaded by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button class="btn btn-outline" id="load-more-btn">Load More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+        <div class="mobile-nav-menu">
+            <a href="index.html" class="mobile-nav-link">Home</a>
+            <a href="listings.html" class="mobile-nav-link">Browse</a>
+            <a href="repair-reuse.html" class="mobile-nav-link">Post Item</a>
+            <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+            <a href="wishlist.html" class="mobile-nav-link">Wishlist</a>
+            <a href="cart.html" class="mobile-nav-link">Cart</a>
+            <a href="profile.html" class="mobile-nav-link">Profile</a>
+            <a href="auth.html" class="mobile-nav-link">Sign In</a>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
