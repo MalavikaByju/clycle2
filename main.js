@@ -165,9 +165,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function initAuthPage() {
-    console.log("Auth page loaded.");
-    // TODO: Move your auth-specific JS here from auth.html
+  console.log("Auth page loaded.");
+
+  const loginForm = document.getElementById("login-form");
+  const signupForm = document.getElementById("signup-form");
+  const showSignupLink = document.getElementById("show-signup");
+  const signupSection = document.getElementById("signup-section");
+
+  if (showSignupLink) {
+    showSignupLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      signupSection.style.display = "block";
+    });
   }
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+      console.log(`Logging in with ${email}`);
+      alert("Login successful (placeholder)");
+      // Add real login logic here
+    });
+  }
+
+  if (signupForm) {
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("signup-name").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      console.log(`Signing up user ${name} with email ${email}`);
+      alert("Signup successful (placeholder)");
+      // Add real signup logic here
+    });
+  }
+}
+
 
   function initHomePage() {
     console.log("Home page loaded.");
