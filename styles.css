@@ -2827,18 +2827,18 @@ p {
     scroll-behavior: auto !important;
   }
 }
-/* Force listings header to be static and aligned */
-header.listings-header {
+/* === FIX: Remove awkward floating header on listings page === */
+header.listings-header,
+header.listings-header *[class*="search"],
+header.listings-header *[class*="filter"] {
   position: static !important;
   top: auto !important;
-  z-index: 10; /* stays above content if needed */
 }
 
-/* Ensure content below doesn't overlap the header */
-.listings-header + .listings-container,
-.listings-header + main,
-.listings-header + section {
-  margin-top: 1.5rem; /* adjust to taste */
+/* Push listings grid down from header */
+header.listings-header + * {
+  margin-top: 1.5rem !important;
 }
+
 
 
