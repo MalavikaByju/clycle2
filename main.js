@@ -1,214 +1,300 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const pageContent = document.getElementById("page-content");
+/* main.js — SPA loader (robust; drop-in for all pages)
+   - Put <script defer src="main.js?v=2"></script> on every page
+   - Works with files served directly (direct load) and when navigating within the site
+   - Replaces only <main> or #page-content from fetched pages (keeps header/footer)
+*/
 
-  // ========= SPA Loader =========
-  async function loadPage(url, addToHistory = true) {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
-      const html = await response.text();
-      const temp = document.createElement("div");
-      temp.innerHTML = html;
+(function () {
+  "use strict";
 
-      const newContent = temp.querySelector("main");
-      if (newContent) {
-        pageContent.innerHTML = newContent.innerHTML;
+  console.log("SPA loader: starting"); // initial indicator (check console)
 
-        if (addToHistory) {
-          history.pushState({ url }, "", url);
+  document.addEventListener("DOMContentLoaded", () => {
+    const ROOT_ID = "page-content"; // prefer element with this id; else fallback to first <main>
+    const pageRoot = document.getElementById(ROOT_ID) || document.querySelector("main");
+    if (!pageRoot) {
+      console.warn("SPA loader: no <main> or #page-content found on this page. SPA will still try to work.");
+    }
+
+    // Utility: determine if a link is same-origin and internal (we will handle)
+    function shouldHandleLink(link) {
+      if (!link || !link.getAttribute) return false;
+      const href = link.getAttribute("href");
+      if (!href) return false;
+      // Ignore anchors (same page) — let default behavior unless anchor on same page should be handled
+      if (href.startsWith("mailto:") || href.startsWith("tel:")) return false;
+      if (link.target === "_blank") return false;
+      if (link.hasAttribute("download")) return false;
+      // Hostname check — same origin
+      try {
+        const url = new URL(href, location.href);
+        return url.origin === location.origin;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    // Fetch and replace main content
+    async function fetchAndReplace(url, addToHistory = true) {
+      try {
+        console.log("SPA loader: navigating to", url);
+        const res = await fetch(url, { headers: { "X-Requested-With": "SPA" } });
+        if (!res.ok) {
+          console.error("SPA loader: fetch failed", res.status);
+          // fall back to full navigation if fetch fails
+          location.href = url;
+          return;
         }
 
-        // Run any page-specific scripts after content loads
+        const text = await res.text();
+        const doc = new DOMParser().parseFromString(text, "text/html");
+
+        // pick new main content: prefer id=page-content, else the first <main>
+        const newRoot = doc.getElementById(ROOT_ID) || doc.querySelector("main");
+        if (!newRoot) {
+          console.warn("SPA loader: fetched page has no <main>; performing full navigation");
+          location.href = url;
+          return;
+        }
+
+        // Replace the current pageRoot's innerHTML (if pageRoot exists)
+        if (pageRoot) {
+          pageRoot.innerHTML = newRoot.innerHTML;
+        } else {
+          // If no pageRoot on current (rare), insert new main after header or at body start
+          const header = document.querySelector("header");
+          const container = document.createElement("main");
+          container.id = ROOT_ID;
+          container.innerHTML = newRoot.innerHTML;
+          if (header && header.parentNode) header.parentNode.insertBefore(container, header.nextSibling);
+          else document.body.insertBefore(container, document.body.firstChild);
+        }
+
+        // Update document title if present
+        const fetchedTitle = doc.querySelector("title");
+        if (fetchedTitle) document.title = fetchedTitle.textContent;
+
+        // Optionally update meta description (helpful)
+        const fetchedMetaDesc = doc.querySelector('meta[name="description"]');
+        if (fetchedMetaDesc) {
+          let meta = document.querySelector('meta[name="description"]');
+          if (!meta) {
+            meta = document.createElement("meta");
+            meta.setAttribute("name", "description");
+            document.head.appendChild(meta);
+          }
+          meta.setAttribute("content", fetchedMetaDesc.getAttribute("content") || "");
+        }
+
+        // scroll to top on navigation
+        window.scrollTo({ top: 0, behavior: "instant" });
+
+        // push history
+        if (addToHistory) history.pushState({ spa: true, url }, "", url);
+
+        // Run page-specific code
         runPageScripts(url);
+        announceForA11y(`Loaded ${document.title || url}`);
+      } catch (err) {
+        console.error("SPA loader: unexpected error", err);
+        // final fallback
+        location.href = url;
       }
-    } catch (err) {
-      console.error("Error loading page:", err);
-      pageContent.innerHTML = `<p>Sorry, something went wrong loading this page.</p>`;
     }
-  }
 
-  // ========= Intercept Internal Links =========
-  document.body.addEventListener("click", (e) => {
-    const link = e.target.closest("a");
-    if (link && link.hostname === window.location.hostname && !link.target && !link.hasAttribute("data-no-spa")) {
-      e.preventDefault();
-      const url = link.getAttribute("href");
-      loadPage(url);
+    // Intercept clicks on links
+    document.body.addEventListener("click", (ev) => {
+      const a = ev.target.closest("a");
+      if (!a) return;
+      if (!shouldHandleLink(a)) return;
+      const href = a.getAttribute("href");
+      // if href starts with '#', handle as same-page anchor
+      if (href.startsWith("#")) {
+        // default anchor behavior
+        return;
+      }
+      ev.preventDefault();
+      fetchAndReplace(href, true);
+    });
+
+    // Handle back/forward navigation
+    window.addEventListener("popstate", (ev) => {
+      // if SPA state present, load the url without pushing
+      const url = location.pathname + location.search + location.hash;
+      fetchAndReplace(url, false);
+    });
+
+    // Accessibility announcer
+    let announcer = document.getElementById("spa-announcer");
+    if (!announcer) {
+      announcer = document.createElement("div");
+      announcer.id = "spa-announcer";
+      announcer.setAttribute("aria-live", "polite");
+      announcer.style.position = "absolute";
+      announcer.style.left = "-9999px";
+      announcer.style.width = "1px";
+      announcer.style.height = "1px";
+      announcer.style.overflow = "hidden";
+      document.body.appendChild(announcer);
     }
-  });
-
-  // ========= Handle Browser Back/Forward =========
-  window.addEventListener("popstate", (e) => {
-    if (e.state?.url) {
-      loadPage(e.state.url, false);
+    function announceForA11y(msg) {
+      announcer.textContent = "";
+      setTimeout(() => (announcer.textContent = msg), 50);
     }
-  });
 
-  // ========= Page-specific Script Loader =========
-  function runPageScripts(url) {
-    // Extract filename
-    const page = url.split("/").pop();
+    // Page-specific script runner
+    function runPageScripts(url) {
+      // Normalize url to filename
+      let path = url.split("/").pop() || "index.html";
+      // If the url looks like '/some/path/' handle as index.html equivalent
+      if (path === "") path = "index.html";
+      console.log("SPA loader: running scripts for", path);
 
-    switch (page) {
-      case "listings.html":
-        initListingsPage();
-        break;
-      case "product.html":
-        initProductPage();
-        break;
-      case "cart.html":
-        initCartPage();
-        break;
-      case "profile.html":
-        initProfilePage();
-        break;
-      case "repair-reuse.html":
-        initRepairReusePage();
-        break;
-      case "auth.html":
-        initAuthPage();
-        break;
-      default:
-        initHomePage();
+      // Minimal delay to allow DOM to settle (images etc. can still load)
+      setTimeout(() => {
+        switch (path) {
+          case "listings.html":
+            initListingsPage();
+            break;
+          case "product.html":
+            initProductPage();
+            break;
+          case "cart.html":
+            initCartPage();
+            break;
+          case "profile.html":
+            initProfilePage();
+            break;
+          case "repair-reuse.html":
+            initRepairReusePage();
+            break;
+          case "auth.html":
+            initAuthPage();
+            break;
+          case "index.html":
+          case "home.html":
+          default:
+            initHomePage();
+            break;
+        }
+      }, 10);
     }
-  }
 
-  // ========= Page-specific Functions =========
-  function initListingsPage() {
-  console.log("Listings page loaded.");
+    /* -------------------------
+       Page initializers
+       Put page-specific DOM wiring here.
+       These are intentionally conservative (null-checks) so they won't crash.
+       Move your real page JS inside the relevant function below.
+    ------------------------- */
 
-  // Example: Filter button logic
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      console.log(`Filter applied: ${btn.dataset.filter}`);
-      // Add your filtering logic here
-    });
-  });
+    function initListingsPage() {
+      console.log("initListingsPage()");
+      // Re-attach any event listeners for listing filters, sorters, cards
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        // remove duplicate listeners if present by cloning node (safe simple approach)
+        const clone = btn.cloneNode(true);
+        btn.parentNode.replaceChild(clone, btn);
+        clone.addEventListener("click", () => {
+          const f = clone.dataset.filter || "all";
+          console.log("Filter clicked:", f);
+          // Do filtering logic as required
+        });
+      });
 
-  // If you had any other inline JS in listings.html, it will be moved here
-}
+      // Example: attach click to product links if needed (not necessary - links are intercepted)
+    }
 
-  function initProductPage() {
-  console.log("Product page loaded.");
+    function initProductPage() {
+      console.log("initProductPage()");
+      const addToCart = document.getElementById("add-to-cart");
+      if (addToCart) {
+        addToCart.addEventListener("click", () => {
+          // safe placeholder — replace with your actual code
+          console.log("Product add-to-cart clicked");
+          // show a short visual feedback
+          addToCart.disabled = true;
+          setTimeout(() => (addToCart.disabled = false), 700);
+        });
+      }
+    }
 
-  // Example: Add to cart button functionality
-  const addToCartBtn = document.getElementById("add-to-cart");
-  if (addToCartBtn) {
-    addToCartBtn.addEventListener("click", () => {
-      console.log("Product added to cart!");
-      alert("Product has been added to your cart.");
-      // Add your actual cart handling logic here
-    });
-  }
-}
+    function initCartPage() {
+      console.log("initCartPage()");
+      document.querySelectorAll(".remove-item").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const item = btn.closest(".cart-item");
+          if (item) item.remove();
+        });
+      });
+      const checkout = document.getElementById("checkout-btn");
+      if (checkout) {
+        checkout.addEventListener("click", () => {
+          alert("Checkout placeholder");
+        });
+      }
+    }
 
-  function initCartPage() {
-  console.log("Cart page loaded.");
+    function initProfilePage() {
+      console.log("initProfilePage()");
+      const edit = document.getElementById("edit-profile");
+      if (edit) edit.addEventListener("click", () => alert("Edit profile (placeholder)"));
+      const logout = document.getElementById("logout-btn");
+      if (logout) logout.addEventListener("click", () => alert("Logout (placeholder)"));
+    }
 
-  // Handle remove item
-  document.querySelectorAll(".remove-item").forEach(btn => {
-    btn.addEventListener("click", () => {
-      btn.closest(".cart-item").remove();
-      console.log("Item removed from cart");
-      // Add recalculation logic here
-    });
-  });
+    function initRepairReusePage() {
+      console.log("initRepairReusePage()");
+      document.querySelectorAll(".service-contact").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          alert(`Contacting ${btn.dataset.service}`);
+        });
+      });
+    }
 
-  // Handle checkout
-  const checkoutBtn = document.getElementById("checkout-btn");
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener("click", () => {
-      alert("Proceeding to checkout...");
-      // Add your checkout process logic here
-    });
-  }
-}
+    function initAuthPage() {
+      console.log("initAuthPage()");
+      const login = document.getElementById("login-form");
+      const signup = document.getElementById("signup-form");
+      const showSignup = document.getElementById("show-signup");
+      const signupSection = document.getElementById("signup-section");
+      if (showSignup && signupSection) {
+        showSignup.addEventListener("click", (e) => {
+          e.preventDefault();
+          signupSection.style.display = "block";
+        });
+      }
+      if (login) {
+        login.addEventListener("submit", (e) => {
+          e.preventDefault();
+          alert("Login placeholder");
+        });
+      }
+      if (signup) {
+        signup.addEventListener("submit", (e) => {
+          e.preventDefault();
+          alert("Signup placeholder");
+        });
+      }
+    }
 
+    function initHomePage() {
+      console.log("initHomePage()");
+      // Put any home page logic here (carousels, counters etc.)
+    }
 
-  function initProfilePage() {
-  console.log("Profile page loaded.");
+    /* -------------------------
+       Kickoff: if we loaded a page directly, run its scripts
+    ------------------------- */
+    const currentPath = location.pathname.split("/").pop() || "index.html";
+    runPageScripts(currentPath);
 
-  // Handle Edit Profile
-  const editBtn = document.getElementById("edit-profile");
-  if (editBtn) {
-    editBtn.addEventListener("click", () => {
-      alert("Edit Profile clicked");
-      // Add your edit profile logic here
-    });
-  }
+    // Expose a small debug function for you to test from console
+    window.__spa_debug = {
+      fetchAndReplace,
+      runPageScripts,
+    };
 
-  // Handle Logout
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      alert("You have been logged out.");
-      // Add your logout logic here (clear session, redirect, etc.)
-    });
-  }
-}
-
-
-  function initRepairReusePage() {
-  console.log("Repair & Reuse page loaded.");
-
-  // Handle contact button clicks
-  document.querySelectorAll(".service-contact").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const serviceType = btn.dataset.service;
-      alert(`Contacting ${serviceType} repair service...`);
-      // Add your messaging or booking logic here
-    });
-  });
-}
-
-
-  function initAuthPage() {
-  console.log("Auth page loaded.");
-
-  const loginForm = document.getElementById("login-form");
-  const signupForm = document.getElementById("signup-form");
-  const showSignupLink = document.getElementById("show-signup");
-  const signupSection = document.getElementById("signup-section");
-
-  if (showSignupLink) {
-    showSignupLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      signupSection.style.display = "block";
-    });
-  }
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
-      console.log(`Logging in with ${email}`);
-      alert("Login successful (placeholder)");
-      // Add real login logic here
-    });
-  }
-
-  if (signupForm) {
-    signupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("signup-name").value;
-      const email = document.getElementById("signup-email").value;
-      const password = document.getElementById("signup-password").value;
-      console.log(`Signing up user ${name} with email ${email}`);
-      alert("Signup successful (placeholder)");
-      // Add real signup logic here
-    });
-  }
-}
-
-
-  function initHomePage() {
-    console.log("Home page loaded.");
-    // Optional: JS for your home page
-  }
-
-  // ========= Load Default Page =========
-  loadPage("listings.html", false); // Change to your preferred default
-});
+    console.log("SPA loader: ready");
+    announceForA11y("Application ready");
+  }); // DOMContentLoaded
+})(); 
