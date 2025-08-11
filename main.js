@@ -91,9 +91,18 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
   function initProductPage() {
-    console.log("Product page loaded.");
-    // TODO: Move your product-specific JS here from product.html
+  console.log("Product page loaded.");
+
+  // Example: Add to cart button functionality
+  const addToCartBtn = document.getElementById("add-to-cart");
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener("click", () => {
+      console.log("Product added to cart!");
+      alert("Product has been added to your cart.");
+      // Add your actual cart handling logic here
+    });
   }
+}
 
   function initCartPage() {
     console.log("Cart page loaded.");
