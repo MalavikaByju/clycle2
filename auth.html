@@ -1,172 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Clycle</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo">Clycle</a>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="listings.html" class="nav-link">Browse</a>
-                </li>
-                <li class="nav-item">
-                    <a href="repair-reuse.html" class="nav-link">Post Item</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.html#contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+<main>
+  <!-- ✅ Original Auth page content starts here -->
 
-    <!-- Auth Section -->
-    <section class="auth-section">
-        <div class="container">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <h1>Welcome to Clycle</h1>
-                    <p>Join your campus community for sustainable shopping</p>
-                </div>
+  <section class="auth-container">
+    <h1>Login to Clycle</h1>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+      <button type="submit" class="btn-primary">Login</button>
+    </form>
 
-                <div class="auth-tabs">
-                    <button class="tab-btn active" data-tab="signin" aria-controls="signin-panel">Sign In</button>
-                    <button class="tab-btn" data-tab="signup" aria-controls="signup-panel">Sign Up</button>
-                </div>
+    <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
 
-                <!-- Sign In Form -->
-                <div class="tab-content">
-                    <div class="tab-panel active" id="signin-panel" role="tabpanel">
-                        <form class="auth-form" id="signin-form" novalidate>
-                            <div class="form-group">
-                                <label for="signin-email">Email Address</label>
-                                <input 
-                                    type="email" 
-                                    id="signin-email" 
-                                    name="email" 
-                                    required 
-                                    aria-describedby="signin-email-error"
-                                >
-                                <div class="error-message" id="signin-email-error" role="alert"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="signin-password">Password</label>
-                                <input 
-                                    type="password" 
-                                    id="signin-password" 
-                                    name="password" 
-                                    required
-                                    aria-describedby="signin-password-error"
-                                >
-                                <div class="error-message" id="signin-password-error" role="alert"></div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary full-width">Sign In</button>
-                            
-                            <div class="auth-links">
-                                <a href="#" class="forgot-password">Forgot Password?</a>
-                            </div>
-                        </form>
-                        
-                        <div class="divider">
-                            <span>Or continue with</span>
-                        </div>
-                        
-                        <button class="btn btn-google" aria-label="Sign in with Google">
-                            <span class="google-icon">G</span>
-                            Continue with Google
-                        </button>
-                    </div>
+    <div id="signup-section" style="display:none;">
+      <h2>Create an Account</h2>
+      <form id="signup-form">
+        <input type="text" id="signup-name" placeholder="Full Name" required />
+        <input type="email" id="signup-email" placeholder="Email" required />
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <button type="submit" class="btn-secondary">Sign Up</button>
+      </form>
+    </div>
+  </section>
 
-                    <!-- Sign Up Form -->
-                    <div class="tab-panel" id="signup-panel" role="tabpanel">
-                        <form class="auth-form" id="signup-form" novalidate>
-                            <div class="form-group">
-                                <label for="signup-name">Full Name</label>
-                                <input 
-                                    type="text" 
-                                    id="signup-name" 
-                                    name="name" 
-                                    required
-                                    aria-describedby="signup-name-error"
-                                >
-                                <div class="error-message" id="signup-name-error" role="alert"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="signup-email">Email Address</label>
-                                <input 
-                                    type="email" 
-                                    id="signup-email" 
-                                    name="email" 
-                                    required
-                                    aria-describedby="signup-email-error"
-                                >
-                                <div class="error-message" id="signup-email-error" role="alert"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="signup-password">Password</label>
-                                <input 
-                                    type="password" 
-                                    id="signup-password" 
-                                    name="password" 
-                                    required
-                                    aria-describedby="signup-password-error"
-                                >
-                                <div class="error-message" id="signup-password-error" role="alert"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="signup-confirm-password">Confirm Password</label>
-                                <input 
-                                    type="password" 
-                                    id="signup-confirm-password" 
-                                    name="confirmPassword" 
-                                    required
-                                    aria-describedby="signup-confirm-password-error"
-                                >
-                                <div class="error-message" id="signup-confirm-password-error" role="alert"></div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary full-width">Create Account</button>
-                            
-                            <div class="terms-text">
-                                <p>By signing up, you agree to our <a href="terms.html">Terms & Conditions</a></p>
-                            </div>
-                        </form>
-                        
-                        <div class="divider">
-                            <span>Or continue with</span>
-                        </div>
-                        
-                        <button class="btn btn-google" aria-label="Sign up with Google">
-                            <span class="google-icon">G</span>
-                            Continue with Google
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script src="app.js"></script>
-</body>
-</html>
+  <!-- ✅ Original Auth page content ends here -->
+</main>
