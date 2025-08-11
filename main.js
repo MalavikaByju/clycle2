@@ -105,9 +105,27 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
   function initCartPage() {
-    console.log("Cart page loaded.");
-    // TODO: Move your cart-specific JS here from cart.html
+  console.log("Cart page loaded.");
+
+  // Handle remove item
+  document.querySelectorAll(".remove-item").forEach(btn => {
+    btn.addEventListener("click", () => {
+      btn.closest(".cart-item").remove();
+      console.log("Item removed from cart");
+      // Add recalculation logic here
+    });
+  });
+
+  // Handle checkout
+  const checkoutBtn = document.getElementById("checkout-btn");
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      alert("Proceeding to checkout...");
+      // Add your checkout process logic here
+    });
   }
+}
+
 
   function initProfilePage() {
     console.log("Profile page loaded.");
