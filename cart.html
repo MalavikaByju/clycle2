@@ -1,66 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Clycle</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html" class="logo">Clycle</a>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="listings.html" class="nav-link">Browse</a>
-                </li>
-                <li class="nav-item">
-                    <a href="repair-reuse.html" class="nav-link">Post Item</a>
-                </li>
-                <li class="nav-item">
-                    <a href="wishlist.html" class="nav-link">Wishlist <span class="badge" id="wishlist-badge">0</span></a>
-                </li>
-                <li class="nav-item">
-                    <a href="cart.html" class="nav-link active" aria-current="page">Cart <span class="badge" id="cart-badge">0</span></a>
-                </li>
-            </ul>
-            <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+<main>
+  <!-- ✅ Your original cart page content starts here -->
+
+  <section class="cart-container">
+    <h1>Your Cart</h1>
+    <div class="cart-items">
+      <!-- Example cart item -->
+      <div class="cart-item">
+        <img src="images/sample-product.jpg" alt="Sample product in cart" />
+        <div class="item-details">
+          <h2>Sample Product</h2>
+          <p>₹500</p>
+          <input type="number" value="1" min="1" class="item-qty" />
+          <button class="remove-item">Remove</button>
         </div>
-    </nav>
+      </div>
+      <!-- Repeat for more items -->
+    </div>
 
-    <!-- Cart Section -->
-    <section class="cart-section">
-        <div class="container">
-            <div class="page-header">
-                <h1>Shopping Cart</h1>
-                <p>Review your items before checkout</p>
-            </div>
+    <div class="cart-summary">
+      <p>Total: ₹500</p>
+      <button id="checkout-btn" class="btn-primary">Proceed to Checkout</button>
+    </div>
+  </section>
 
-            <div class="cart-content" id="cart-content">
-                <!-- Content loaded by JavaScript -->
-            </div>
-
-            <!-- Empty State -->
-            <div class="empty-state" id="empty-cart" style="display: none;">
-                <div class="empty-icon">🛒</div>
-                <h2>Your cart is empty</h2>
-                <p>Add some items to your cart to get started.</p>
-                <a href="listings.html" class="btn btn-primary">Continue Shopping</a>
-            </div>
-        </div>
-    </section>
-
-    <script src="app.js"></script>
-</body>
-</html>
+  <!-- ✅ Your original cart page content ends here -->
+</main>
