@@ -2827,17 +2827,18 @@ p {
     scroll-behavior: auto !important;
   }
 }
-/* === FIX: Remove awkward floating header on listings page === */
-header.listings-header,
-header.listings-header *[class*="search"],
-header.listings-header *[class*="filter"] {
+/* === FIX: Remove awkward sticky header + filters on listings page === */
+header.listings-header {
   position: static !important;
   top: auto !important;
+  z-index: auto !important;
 }
 
-/* Push listings grid down from header */
-header.listings-header + * {
-  margin-top: 1.5rem !important;
+.filters-section {
+  position: static !important;
+  top: auto !important;
+  margin-top: 1rem;        /* space above filters */
+  margin-bottom: 1.5rem;   /* space below filters so cards don't touch */
 }
 
 
