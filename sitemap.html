@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sitemap · Clycle</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif; line-height: 1.6; margin: 24px; }
+    h1 { margin-bottom: 12px; }
+    .desc { color: #555; margin-bottom: 16px; }
+    ul { list-style: none; padding-left: 0; }
+    li { margin: 6px 0; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Sitemap</h1>
+  <p class="desc">Quick links to major pages on Clycle.</p>
+
+  <!-- Manually list your important pages here -->
+  <ul>
+    <li><a href="/clycle/">Home</a></li>
+    <li><a href="/clycle/browse.html">Browse</a></li>
+    <li><a href="/clycle/post-item.html">Post an Item</a></li>
+    <li><a href="/clycle/contact.html">Contact</a></li>
+    <li><a href="/clycle/terms.html">Terms &amp; Conditions</a></li>
+  </ul>
+
+  <!-- Optional: auto-generate links from XML sitemap (see Step 4) -->
+  <section id="auto-sitemap" hidden>
+    <h2>All pages</h2>
+    <ul id="sitemap-list"></ul>
+  </section>
+
+  <script>
+    // Optional: uncomment to auto-render from sitemap.xml
+    // (Requires you to complete Step 3 first.)
+    /*
+    fetch('/clycle/sitemap.xml')
+      .then(r => r.text())
+      .then(xml => {
+        const doc = new DOMParser().parseFromString(xml, 'application/xml');
+        const urls = [...doc.querySelectorAll('url > loc')].map(n => n.textContent);
+        const list = document.getElementById('sitemap-list');
+        urls.forEach(u => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = u;
+          a.textContent = u.replace('https://malavikabyju.github.io', '');
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+        document.getElementById('auto-sitemap').hidden = false;
+      })
+      .catch(() => {});
+    */
+  </script>
+</body>
+</html>
